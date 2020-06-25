@@ -1,4 +1,4 @@
-name: cmelab
+name: mosdef37
 channels:
   - conda-forge
   - mosdef
