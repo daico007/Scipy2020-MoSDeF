@@ -9,6 +9,9 @@ dependencies:
   - pip
   - matplotlib
   - numpy
+  - unyt >= 2.4
+  - boltons
+  - lxml
   - parmed
   - foyer
   - mbuild>=0.10.6
@@ -21,3 +24,4 @@ dependencies:
   - pip:
     - "--editable=git+https://github.com/rsdefever/GAFF-foyer.git#egg=gaff_foyer-master"
     - "--editable=git+https://github.com/rsdefever/antefoyer.git#egg=antefoyer-master"
+    - "--editable=git+https://github.com/mosdef-hub/gmso.git#egg=gmso-master"
