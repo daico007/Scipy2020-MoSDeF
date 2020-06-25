@@ -1,0 +1,23 @@
+name: cmelab
+channels:
+  - conda-forge
+  - mosdef
+  - bioconda
+  - omnia
+dependencies:
+  - python=3.7
+  - pip
+  - matplotlib
+  - numpy
+  - parmed
+  - foyer
+  - mbuild>=0.10.6
+  - openbabel
+  - py3Dmol
+  - ambertools
+  - nodejs>=10
+  - jupyterlab
+  - ipywidgets
+  - pip:
+    - "--editable=git+https://github.com/rsdefever/GAFF-foyer.git#egg=gaff_foyer-master"
+    - "--editable=git+https://github.com/rsdefever/antefoyer.git#egg=antefoyer-master"
