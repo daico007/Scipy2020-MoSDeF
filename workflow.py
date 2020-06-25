@@ -35,3 +35,5 @@ gmso.formats.write_top(topology, "simulation/topol.top")
 gmso.formats.write_gro(topology, "simulation/conf.gro")
 
 
+run_energy_minimization()
+run_nvt()
