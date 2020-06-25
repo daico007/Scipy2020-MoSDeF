@@ -15,6 +15,7 @@ dependencies:
   - openbabel
   - py3Dmol
   - ambertools
+  - panedr
   - nodejs>=10
   - jupyterlab
   - ipywidgets
