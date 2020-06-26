@@ -1,6 +1,6 @@
 integrator               = md
 dt                       = 0.002
-nsteps                   = 10000
+nsteps                   = 50000
 comm-mode                = Linear
 nstcomm                  = 1000
 comm-grps                = system

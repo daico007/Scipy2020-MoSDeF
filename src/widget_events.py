@@ -8,7 +8,7 @@ import warnings
 warnings.filterwarnings('ignore')
 
 # Read in and create a dictionary of all the compounds
-files = glob.glob('./molecules-mol2/foyer_molecules/ante_types/*.mol2')
+files = glob.glob('./molecules-mol2/*.mol2')
 compounds = {'Select your molecule': None}
 
 for file in files:
