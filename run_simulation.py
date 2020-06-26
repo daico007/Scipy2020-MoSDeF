@@ -19,7 +19,6 @@ def run_energy_minimization(wd="./simulation/"):
                  universal_newlines=True, shell=True, cwd=wd)
 
     out, err = proc.communicate()
-    print(err)
 
     if "Fatal error" in err:
         print(err)
@@ -32,9 +31,6 @@ def run_energy_minimization(wd="./simulation/"):
                  universal_newlines=True, shell=True, cwd=wd)
 
     out, err = proc.communicate()
-
-    print(err)
-
 
 
 def run_nvt(wd="./simulation/"):
@@ -52,7 +48,6 @@ def run_nvt(wd="./simulation/"):
                  universal_newlines=True, shell=True, cwd=wd)
 
     out, err = proc.communicate()
-    print(err)
 
     if "Fatal error" in err:
         print(err)
@@ -72,8 +67,35 @@ def run_nvt(wd="./simulation/"):
                 "remaining wall" in output):
                 print(output.strip(), end="\r")
             else:
-                print(output.strip())
+                pass
+                #print(output.strip())
 
     print()
     rc = proc.poll()
+
+
+def visualize_trajectory(wd="./simulation/"):
+    xtcfile = path.join(wd, "traj_comp.xtc")
+    wrappedxtcfile = path.join(wd, "wrapped.xtc")
+    grofile = path.join(wd, "confout.gro")
+    try:
+        assert all([path.exists(f) for f in [xtcfile, grofile]])
+    except:
+        raise FileNotFoundError(f"traj_comp.xtc, and confout.gro were "
+                                 f"not found in {wd}")
+    grompp_command = (f"echo 0 | gmx trjconv -f traj_comp.xtc -o wrapped.xtc -pbc whole")
+    proc = Popen(grompp_command, stdout=PIPE, stderr=PIPE,
+                 universal_newlines=True, shell=True, cwd=wd)
+
+    out, err = proc.communicate()
+
+    if "Fatal error" in err:
+        print(err)
+        raise RuntimeError("Gromacs TRJCONV command failed")
+
+    import nglview as nv
+    import mdtraj as md
+    traj = md.load(wrappedxtcfile, top=grofile)
+    ngl_widget = nv.show_mdtraj(traj)
+    return ngl_widget
 
