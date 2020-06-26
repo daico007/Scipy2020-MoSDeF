@@ -10,10 +10,13 @@ warnings.filterwarnings('ignore')
 # Read in and create a dictionary of all the compounds
 files = glob.glob('./molecules-mol2/*.mol2')
 compounds = {'Select your molecule': None}
+reverse_path = dict()
 
 for file in files:
     molname = re.sub('.mol2','',re.sub('^.*/','',file))
-    compounds[molname] = mb.load(file, use_parmed=True)
+    compound = mb.load(file, use_parmed=True)
+    compounds[molname] = compound
+    reverse_path[compound] = file
 
 # Define some globale variable
 # These variables will be update when the widget event handlers are called
@@ -28,7 +31,7 @@ compound_dropdown = widgets.Dropdown(options=compounds,
                                      description='Select your molecule',
                                      style=style)
 box_slider = widgets.FloatSlider(min=1, max=10,
-                description="Dimension of box",
+                description="Dimension of box (nm)",
                 value=5, style=style)
 n_slider = widgets.IntSlider(min=1, max=100,
                 description="Number of particles",
@@ -55,6 +58,9 @@ def compound_handler(obj):
     COMPOUND = compound_dropdown.value
     with out_mol:
         clear_output()
+        path = reverse_path[COMPOUND]
+        print('compound = mb.load("{}")'.format(path))
+        print("compound.visualize()")
         if compound_dropdown.value:
             visualize(compound_dropdown.value)
 
@@ -71,6 +77,11 @@ def box_handler(obj):
     BOX_OF_COMPOUNDS = box_of_compound
     with out_box:
         clear_output()
+        print("box = {}".format(box))
+        print("box_of_compound = mb.fill_box(compound=compoound, "
+              "n_compounds={}, "
+              "box={})".format(n_compounds, box))
+        print("box_of_compound.visualize()")
         visualize(box_of_compound)
 
 # Define widget event trigger
@@ -96,10 +107,14 @@ def smiles_handler(obj):
     except:
         compound = None
     with out_smiles:
-        clear_output()
         if compound:
+            clear_output()
+            print('smiles_compound = mb.load("{}", smiles=True)'.format(
+                                                        smiles_box.value))
+            print('smiles_compound.visualize()')
             visualize(compound)
         else:
+            clear_output()
             print('Invalid SMILES string')
 
 smiles_box.observe(smiles_handler, names='value')
