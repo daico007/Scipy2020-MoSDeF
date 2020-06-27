@@ -19,6 +19,7 @@ dependencies:
   - openbabel
   - py3Dmol
   - ambertools
+  - gromacs
   - panedr
   - nodejs>=10
   - jupyterlab
